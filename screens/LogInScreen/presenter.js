@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import {
   View,
   Text,
@@ -7,7 +8,8 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
-  StatusBar
+  StatusBar,
+  ActivityIndicator
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -29,16 +31,26 @@ const LoginScreen = props => (
         style={styles.textInput}
         autoCapitalize={"none"}
         autoCorrect={false}
+        value={props.username}
+        onChange={props.handleChangeUsername}
       />
       <TextInput
         placeholder="Password"
         style={styles.textInput}
         autoCapitalize={"none"}
         secureTextEntry={true}
+        value={props.password}
+        onChange={props.handleChangePassword}
+        returnKeyType="send"
+        onSubmitEditing={props.handleSubmit}
       />
-      <TouchableOpacity style={styles.touchable}>
+      <TouchableOpacity style={styles.touchable} onPressOut={props.handleSubmit}>
         <View style={styles.button}>
-          <Text style={styles.btnText}>Log In</Text>
+          {props.isSubmitting ? (
+            <ActivityIndicator size="small" color="white" />
+          ) : (
+            <Text style={styles.btnText}>Log In</Text>
+          )}
         </View>
       </TouchableOpacity>
       <TouchableOpacity style={styles.fbContainer}>
@@ -49,15 +61,20 @@ const LoginScreen = props => (
       </TouchableOpacity>
     </View>
     <View style={styles.signupView}>
-        <Text style={styles.signupText}>
-            Don't have an account?
-        </Text>
-        <Text style={styles.signupLink}>
-            Sign up.
-        </Text>
+      <Text style={styles.signupText}>Don't have an account?</Text>
+      <Text style={styles.signupLink}>Sign up.</Text>
     </View>
   </View>
 );
+
+LoginScreen.propTypes = {
+  username: PropTypes.string.isRequired,
+  password: PropTypes.string.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+  handleChangeUsername: PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -107,40 +124,40 @@ const styles = StyleSheet.create({
     fontSize: 14
   },
   touchable: {
-      borderRadius: 5,
-      backgroundColor: "#3E99EE",
-      width: width - 80
+    borderRadius: 5,
+    backgroundColor: "#3E99EE",
+    width: width - 80
   },
   button: {
-      paddingHorizontal: 7,
-      height: 50,
-      justifyContent: "center"
+    paddingHorizontal: 7,
+    height: 50,
+    justifyContent: "center"
   },
   btnText: {
-      color: "white",
-      fontWeight: "600",
-      textAlign: "center",
-      fontSize: 14
+    color: "white",
+    fontWeight: "600",
+    textAlign: "center",
+    fontSize: 14
   },
   signupView: {
-      justifyContent: "center",
-      alignItems: "center",
-      flexDirection: "row",
-      height: 50,
-      borderTopWidth: 1,
-      borderTopColor: "#bbb"
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "row",
+    height: 50,
+    borderTopWidth: 1,
+    borderTopColor: "#bbb"
   },
-    signupText: {
-        color: "gray",
-        fontSize: 14,
-        fontWeight: "600"
-    },
-    signupLink: {
-        marginLeft: 10,
-        color: "#3E99EE",
-        fontSize: 14,
-        fontWeight: "600"
-    }
+  signupText: {
+    color: "gray",
+    fontSize: 14,
+    fontWeight: "600"
+  },
+  signupLink: {
+    marginLeft: 10,
+    color: "#3E99EE",
+    fontSize: 14,
+    fontWeight: "600"
+  }
 });
 
 export default LoginScreen;
