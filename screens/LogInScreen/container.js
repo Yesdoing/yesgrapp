@@ -37,12 +37,14 @@ class Container extends Component {
   };
   _submit = () => {
     const { username, password, isSubmitting } = this.state;
+    const { login } = this.props;
     if(!isSubmitting) {
       if(username && password) {
         this.setState({
           isSubmitting: true
         });
         // redux actions 
+        login(username, password);
       } else {
         Alert.alert("All fields are required!!");
       }

@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
   textInput: {
     height: 50,
     borderColor: "#bbb",
-    borderWidth: 1,
+    borderWidth: StyleSheet.hairlineWidth,
     width: width - 80,
     borderRadius: 5,
     marginBottom: 15,
@@ -126,7 +126,8 @@ const styles = StyleSheet.create({
   touchable: {
     borderRadius: 5,
     backgroundColor: "#3E99EE",
-    width: width - 80
+    width: width - 80,
+    marginTop: 25
   },
   button: {
     paddingHorizontal: 7,

@@ -1,29 +1,52 @@
-// Imports 
-
-// Actions 
+// Imports
+import { API_URL } from "../../constants";
+// Actions
 
 // ActionCreators
 
-// API Actions 
+// API Actions
+
+function login(username, password) {
+  return dispatch => {
+    fetch(`${API_URL}/rest-auth/login/`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify({
+        username,
+        password
+      })
+    })
+      .then(response => response.json())
+      .then(json => console.log(json));
+  };
+}
 
 // InitialState
 const InitialState = {
-    isLoggedIn: false 
-}
+  isLoggedIn: false
+};
 
 // Reducer
 
 const reducer = (state = InitialState, action) => {
-    switch(action.type) {
-        default:
-            return state;
-    }
+  switch (action.type) {
+    default:
+      return state;
+  }
 };
 
-// Reduce Functions 
+// Reduce Functions
 
-// Export 
+// Export
 
-// Default Reducer Export 
+const actionCreators = {
+  login
+};
+
+export { actionCreators };
+
+// Default Reducer Export
 
 export default reducer;
